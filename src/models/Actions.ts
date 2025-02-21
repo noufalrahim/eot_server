@@ -1,14 +1,14 @@
-import db from "../config/db.config.js";
+import db from "../config/db.config";
 
 export const getAllActions = async () => {
     const [rows] = await db.query(`SELECT * FROM actions`);
     return rows;
 };
 
-export const postAction = async (action) => {
+export const postAction = async (action: { action_name: string; }) => {
     const { action_name } = action;
 
-    const [existingActions] = await db.query(
+    const [existingActions]: any[] = await db.query(
         `SELECT * FROM actions WHERE action_name = ?`,
         [action_name]
     );
@@ -28,7 +28,7 @@ export const postAction = async (action) => {
 export const putAction = async (id, action) => {
     const { action_name } = action;
 
-    const [existingAction] = await db.query(
+    const [existingAction]: any[] = await db.query(
         `SELECT * FROM actions WHERE action_name = ? AND id != ?`,
         [action_name, id]
     );
